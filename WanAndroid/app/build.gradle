@@ -1,0 +1,131 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'com.google.dagger.hilt.android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
+android {
+    namespace 'com.lifeidroid.wanandroid'
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.lifeidroid.wanandroid"
+        minSdk 26
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.1.1'
+    }
+    packagingOptions {
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+kapt {
+    correctErrorTypes = true
+}
+
+configurations {
+//    implementation.exclude group:'androidx.lifecycle',module:'lifecycle-viewmodel-ktx'
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+
+    def lifecycle_version = "2.4.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    //compose中使用viewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version"
+    //lifecycle-livedata扩展包
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation 'androidx.activity:activity-compose:1.3.1'
+    implementation "androidx.compose.ui:ui:$compose_ui_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
+    implementation 'androidx.compose.material:material:1.1.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+
+    implementation 'androidx.constraintlayout:constraintlayout-compose:1.0.1'
+
+    //accompanist  https://google.github.io/accompanist/systemuicontroller/
+    def accompanist_version = '0.24.11-rc'
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-insets:$accompanist_version"
+    implementation "com.google.accompanist:accompanist-pager:$accompanist_version"//滚动banner
+    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanist_version"//下拉刷新
+    implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"//流式布局
+    implementation "com.google.accompanist:accompanist-webview:$accompanist_version"//WebView
+
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.alibaba:fastjson:1.2.78'
+    // If using insets-ui
+    implementation "com.google.accompanist:accompanist-insets-ui:$accompanist_version"
+    //工具类 https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
+//    implementation "com.blankj:utilcodex:1.30.7"
+
+    //图片加载
+    implementation("io.coil-kt:coil-compose:2.0.0-rc01")
+
+    //网络访问  https://github.com/square/okhttp
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
+
+    //retrofit 协程网络请求倒入的包
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //cookie管理库 https://github.com/franmontiel/PersistentCookieJar˛
+    implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    //json 转换
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation 'com.squareup.moshi:moshi-kotlin:1.13.0'
+//    implementation 'com.squareup.moshi:moshi-kotlin-codegen:1.13.0'
+
+
+    //Hilt
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    implementation 'com.google.dagger:hilt-android:2.44'
+    kapt 'com.google.dagger:hilt-android-compiler:2.44'
+
+    //协程
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2-native-mt'
+    //导航
+    implementation "androidx.navigation:navigation-compose:2.5.2"
+    //数据存储
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation "androidx.datastore:datastore-preferences-core:1.0.0"
+
+}
