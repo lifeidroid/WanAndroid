@@ -48,6 +48,8 @@ fun NavHostApp(
                 navController.navigate(Screen.MyCoinPage.route)
             }, goWebPage = { url ->
                 navController.navigate("${Screen.WebPage.route}/${url.encode()}")
+            }, goSearchPage = {
+                navController.navigate(Screen.SearchPage.route)
             })
         }
         /**
@@ -56,7 +58,7 @@ fun NavHostApp(
         composable("${Screen.SharePage.route}/{${Param.SharePageParam1.name}}/{${Param.SharePageParam2.name}}") {
             val title = it.arguments!!.getString(Param.SharePageParam1.name, "").decode()
             val link = it.arguments!!.getString(Param.SharePageParam2.name, "").decode()
-            SharePage(title, link){
+            SharePage(title, link) {
                 navController.popBackStack()
             }
         }
@@ -75,7 +77,7 @@ fun NavHostApp(
         composable("${Screen.WebPage.route}/{${Param.ArticleDetailPageParam1.name}}") {
             val value1 = it.arguments!!.getString(Param.ArticleDetailPageParam1.name, "").decode()
             WebPage(value1, share = { title, url ->
-                Log.d("===","title:$title  url:$url")
+                Log.d("===", "title:$title  url:$url")
                 navController.navigate(
                     "${Screen.SharePage.route}/${title.encode()}/${url.encode()}"
                 )
@@ -109,6 +111,15 @@ fun NavHostApp(
         composable(HomeComposeDirections.route, arguments = HomeComposeDirections.argumentList) {
             val (email, vip) = HomeComposeDirections.parseArguments(it)
         }
+
+        /**
+         * 搜索页面
+         */
+        composable(Screen.SearchPage.route) {
+            SearchPage() {
+                navController.popBackStack()
+            }
+        }
     }
 }
 
@@ -120,6 +131,7 @@ sealed class Screen(val route: String) {
     object MyCoinPage : Screen("MyCoinPage")
     object WebPage : Screen("WebPage")
     object SharePage : Screen("SharePage")
+    object SearchPage : Screen("SearchPage")
 }
 
 sealed class Param(val name: String) {

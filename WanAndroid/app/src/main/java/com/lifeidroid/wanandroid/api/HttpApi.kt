@@ -142,10 +142,7 @@ interface HttpApi {
     @GET("lg/coin/userinfo/json")
     suspend fun getMyCoinDetail(
     ): CommonBean<MyCoinDetailEntity>
-    /**
-     * 获取个人积分获取列表，需要登录后访问
-     * @return CommonBean<String>
-     */
+
     /**
      * 2.2 知识体系下的文章
      * @param page Int
@@ -155,4 +152,18 @@ interface HttpApi {
     suspend fun getMyCoinHistory(
         @Path("page") page: Int
     ): CommonBean<MyCoinHistoryEntity>
+
+    /**
+     * 1.4 搜索热词
+     * @return CommonBean<MutableList<HotKeyEntity>>
+     */
+    @GET("hotkey/json")
+    suspend fun getHotKey(
+    ): CommonBean<MutableList<HotKeyEntity>>
+
+    @POST("article/query/{page}/json")
+    suspend fun doSearch(
+        @Path("page") page: Int,
+        @Query("k") key: String
+    ): CommonBean<ArticleEntity>
 }

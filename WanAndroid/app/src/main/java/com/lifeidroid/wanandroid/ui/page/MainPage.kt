@@ -28,9 +28,10 @@ import com.lifeidroid.wanandroid.ui.navigation.direction.SystemDetailDirections
 fun MainPage(
     articleDetail: (String) -> Unit,
     toSystemDetail: (args: SystemDetailDirections.SystemDetailArgs) -> Unit,
-    goMyCoinPage:()->Unit,
-    goWebPage: (String) -> Unit
-    ) {
+    goMyCoinPage: () -> Unit,
+    goWebPage: (String) -> Unit,
+    goSearchPage: () -> Unit,
+) {
 
     val navController = rememberNavController()
 
@@ -107,9 +108,17 @@ fun MainPage(
         }
     }
     ) {
-        NavHost(navController = navController, startDestination = Screen.HomePage.route, modifier = Modifier.padding(bottom = 56.dp)) {
+        NavHost(
+            navController = navController,
+            startDestination = Screen.HomePage.route,
+            modifier = Modifier.padding(bottom = 56.dp)
+        ) {
             composable(Screen.HomePage.route) {
-                HomePage(articleDetail = articleDetail, goWebPage = goWebPage)
+                HomePage(
+                    articleDetail = articleDetail,
+                    goWebPage = goWebPage,
+                    goSearchPage = goSearchPage
+                )
             }
             composable(Screen.QuestionPage.route) {
                 QuestionPage(articleDetail = articleDetail)
@@ -118,7 +127,7 @@ fun MainPage(
                 SystemPage(toSystemDetail = toSystemDetail, articleDetail = articleDetail)
             }
             composable(Screen.MinePage.route) {
-                MinePage(  goMyCoinPage= goMyCoinPage)
+                MinePage(goMyCoinPage = goMyCoinPage)
             }
         }
     }

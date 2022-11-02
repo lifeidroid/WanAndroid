@@ -30,6 +30,7 @@ import com.lifeidroid.wanandroid.viewmodel.HomeViewModel
 fun HomePage(
     articleDetail: (String) -> Unit,
     goWebPage: (String) -> Unit,
+    goSearchPage:()->Unit,
     vm: HomeViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 
@@ -69,6 +70,7 @@ fun HomePage(
                     bitmap = ImageBitmap.imageResource(id = R.mipmap.ic_search),
                     contentDescription = null, tint = Color.White,
                     modifier = Modifier.clickable {
+                        goSearchPage()
                     }
                 )
             }
