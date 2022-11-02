@@ -29,6 +29,7 @@ import com.lifeidroid.wanandroid.viewmodel.HomeViewModel
 @Composable
 fun HomePage(
     articleDetail: (String) -> Unit,
+    goWebPage: (String) -> Unit,
     vm: HomeViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 
@@ -85,7 +86,7 @@ fun HomePage(
             ) {
                 //以下内容跟LazyColum用法一样
                 item {
-                    SwiperContent(dataSource = vm.swiperData)
+                    SwiperContent(dataSource = vm.swiperData, goWebPage = goWebPage)
                 }
                 itemsIndexed(vm.articleTopDataSource) { index, temp ->
                     ArticleListItem(item = temp, true, itemClick = { url ->

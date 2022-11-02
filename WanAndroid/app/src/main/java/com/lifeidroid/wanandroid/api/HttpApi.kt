@@ -100,7 +100,7 @@ interface HttpApi {
         @Query("title") title: String,
         @Query("author") author: String,
         @Query("link") link: String,
-    ): CommonBean<String>
+    ): CommonBean<CollecteEntity>
 
     /**
      * 6.4 取消收藏
@@ -111,6 +111,28 @@ interface HttpApi {
     @POST("lg/uncollect_originId/{id}/json")
     suspend fun unCollectArticle(
         @Path("id") id: Int
+    ): CommonBean<String>
+
+    /**
+     * 6.4 取消收藏
+     * 6.4.2 我的收藏页面（该页面包含自己录入的内容）
+     * @param id Int
+     * @return CommonBean<String>
+     */
+    @POST("lg/uncollect/{id}/json")
+    suspend fun unCollectMyArticle(
+        @Path("id") id: Int,
+        @Query("originId") originId: Int = -1
+    ): CommonBean<String>
+
+    /**
+     * 10.5 分享文章
+     * @return CommonBean<String>
+     */
+    @POST("lg/user_article/add/json")
+    suspend fun shareArticle(
+        @Query("title") title: String,
+        @Query("link") link: String
     ): CommonBean<String>
 
     /**

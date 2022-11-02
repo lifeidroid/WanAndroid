@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.lifeidroid.wanandroid.base.BaseModel
 import com.lifeidroid.wanandroid.http.ResultData
 import com.lifeidroid.wanandroid.http.customRequest
+import com.lifeidroid.wanandroid.model.entity.net.CollecteEntity
 import javax.inject.Inject
 
 /**
@@ -39,7 +40,7 @@ class ArticleModel @Inject constructor() : BaseModel() {
         title: String,
         author: String,
         link: String,
-    ): LiveData<ResultData<String>> {
+    ): LiveData<ResultData<CollecteEntity>> {
         return customRequest {
             api {
                 httpApi.collectArticle(title, author, link)
@@ -60,6 +61,38 @@ class ArticleModel @Inject constructor() : BaseModel() {
         return customRequest {
             api {
                 httpApi.unCollectArticle(id)
+            }
+        }
+    }
+    /**
+     * 6.4 取消收藏
+     * 6.4.2 我的收藏页面（该页面包含自己录入的内容）
+     * @param id Int
+     * @return CommonBean<String>
+     */
+    suspend fun unCollectMyArticle(
+        id: Int
+    ): LiveData<ResultData<String>> {
+        return customRequest {
+            api {
+                httpApi.unCollectMyArticle(id)
+            }
+        }
+    }
+
+    /**
+     * 10.5 分享文章
+     * @param title String
+     * @param link String
+     * @return LiveData<Reusable<String>>
+     */
+    suspend fun shareArticle(
+        title: String,
+        link: String
+    ):LiveData<ResultData<String>>{
+        return customRequest {
+            api {
+                httpApi.shareArticle(title,link)
             }
         }
     }

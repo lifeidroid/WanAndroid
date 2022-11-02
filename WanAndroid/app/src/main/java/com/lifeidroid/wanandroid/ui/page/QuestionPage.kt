@@ -55,7 +55,7 @@ fun QuestionPage(
             )
         }
 
-        StatefulContent(content = {
+        StatefulContent(state = vm.statefullState, content = {
             SwipeLazyColum(
                 swipeLazyColumState = vm.swipeLazyColumState,
                 onRefreshCallBack = {

@@ -1,7 +1,9 @@
 package com.lifeidroid.wanandroid.ui.item
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -9,7 +11,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +27,7 @@ import com.lifeidroid.wanandroid.model.entity.net.ArticleEntity
  * 文章列表项
  * @param item Data
  */
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ArticleListItem(
     item: ArticleEntity.Data,
@@ -89,14 +91,29 @@ fun ArticleListItem(
                     .weight(1f)
                     .padding(start = 8.dp)
             )
-            Icon(
-                bitmap = ImageBitmap.imageResource(id = if (item.collect == true) R.mipmap.ic_collect_s else R.mipmap.ic_collect),
-                contentDescription = null,
-                tint = Color.Red,
-                modifier = Modifier.clickable {
-                    collectClick?.invoke()
+            Box(modifier = Modifier) {
+                if (item.collect != true){
+                    Icon(
+                        bitmap = ImageBitmap.imageResource( R.mipmap.ic_collect),
+                        contentDescription = null,
+                        tint = Color.Red,
+                        modifier = Modifier.clickable {
+                            collectClick?.invoke()
+                        }
+                    )
                 }
-            )
+                this@Row.AnimatedVisibility(visible = item.collect ==true, enter = scaleIn(), exit = scaleOut()){
+                    Icon(
+                        bitmap = ImageBitmap.imageResource( R.mipmap.ic_collect_s),
+                        contentDescription = null,
+                        tint = Color.Red,
+                        modifier = Modifier.clickable {
+                            collectClick?.invoke()
+                        }
+                    )
+                }
+
+            }
         }
         Divider(
             modifier = Modifier.padding(top = 8.dp), thickness = 1.dp, color = colorResource(

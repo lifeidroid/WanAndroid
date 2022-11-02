@@ -1,5 +1,6 @@
 package com.lifeidroid.wanandroid.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.*
@@ -16,7 +17,8 @@ import java.util.*
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun SwiperContent(
-    dataSource: List<BannerEntity>
+    dataSource: List<BannerEntity>,
+    goWebPage: (String) -> Unit
 ) {
     val pageState = rememberPagerState(initialPage = 0)
     val coroutineScope = rememberCoroutineScope()
@@ -50,7 +52,10 @@ fun SwiperContent(
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(16 / 9f),
+                .aspectRatio(16 / 9f)
+                .clickable {
+                    goWebPage(dataSource[index].url!!)
+                },
             contentScale = ContentScale.Crop
         )
     }

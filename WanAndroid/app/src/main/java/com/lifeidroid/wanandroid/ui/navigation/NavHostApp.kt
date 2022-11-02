@@ -1,5 +1,6 @@
 package com.lifeidroid.wanandroid.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
@@ -45,7 +46,19 @@ fun NavHostApp(
                 )
             }, goMyCoinPage = {
                 navController.navigate(Screen.MyCoinPage.route)
+            }, goWebPage = { url ->
+                navController.navigate("${Screen.WebPage.route}/${url.encode()}")
             })
+        }
+        /**
+         * 分享页面
+         */
+        composable("${Screen.SharePage.route}/{${Param.SharePageParam1.name}}/{${Param.SharePageParam2.name}}") {
+            val title = it.arguments!!.getString(Param.SharePageParam1.name, "").decode()
+            val link = it.arguments!!.getString(Param.SharePageParam2.name, "").decode()
+            SharePage(title, link){
+                navController.popBackStack()
+            }
         }
         /**
          * 文章详情
@@ -53,6 +66,20 @@ fun NavHostApp(
         composable("${Screen.ArticleDetailPage.route}/{${Param.ArticleDetailPageParam1.name}}") {
             val value1 = it.arguments!!.getString(Param.ArticleDetailPageParam1.name, "").decode()
             ArticleDetailPage(value1) {
+                navController.popBackStack()
+            }
+        }
+        /**
+         * web文章详情
+         */
+        composable("${Screen.WebPage.route}/{${Param.ArticleDetailPageParam1.name}}") {
+            val value1 = it.arguments!!.getString(Param.ArticleDetailPageParam1.name, "").decode()
+            WebPage(value1, share = { title, url ->
+                Log.d("===","title:$title  url:$url")
+                navController.navigate(
+                    "${Screen.SharePage.route}/${title.encode()}/${url.encode()}"
+                )
+            }) {
                 navController.popBackStack()
             }
         }
@@ -91,10 +118,14 @@ sealed class Screen(val route: String) {
     object ArticleDetailPage : Screen("ArticleDetailPage")
     object SystemDetailPage : Screen("SystemDetailPage")
     object MyCoinPage : Screen("MyCoinPage")
+    object WebPage : Screen("WebPage")
+    object SharePage : Screen("SharePage")
 }
 
 sealed class Param(val name: String) {
     object ArticleDetailPageParam1 : Param("param1")
+    object SharePageParam1 : Param("title")
+    object SharePageParam2 : Param("link")
 }
 
 @Preview(name = "NavHostApp")

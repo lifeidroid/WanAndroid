@@ -29,7 +29,8 @@ fun MainPage(
     articleDetail: (String) -> Unit,
     toSystemDetail: (args: SystemDetailDirections.SystemDetailArgs) -> Unit,
     goMyCoinPage:()->Unit,
-) {
+    goWebPage: (String) -> Unit
+    ) {
 
     val navController = rememberNavController()
 
@@ -108,7 +109,7 @@ fun MainPage(
     ) {
         NavHost(navController = navController, startDestination = Screen.HomePage.route, modifier = Modifier.padding(bottom = 56.dp)) {
             composable(Screen.HomePage.route) {
-                HomePage(articleDetail = articleDetail)
+                HomePage(articleDetail = articleDetail, goWebPage = goWebPage)
             }
             composable(Screen.QuestionPage.route) {
                 QuestionPage(articleDetail = articleDetail)
