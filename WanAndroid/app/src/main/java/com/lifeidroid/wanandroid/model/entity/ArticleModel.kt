@@ -41,12 +41,11 @@ class ArticleModel @Inject constructor() : BaseModel() {
      */
     suspend fun collectArticle(
         title: String,
-        author: String,
         link: String,
     ): LiveData<ResultData<CollecteEntity>> {
         return customRequest {
             api {
-                httpApi.collectArticle(title, author, link)
+                httpApi.collectArticle(title, link)
             }
         }
 

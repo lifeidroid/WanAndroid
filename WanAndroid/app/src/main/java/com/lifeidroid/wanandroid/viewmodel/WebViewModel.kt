@@ -40,13 +40,13 @@ class WebViewModel @Inject constructor(savedStateHandle: SavedStateHandle) :
         }
     }
 
-    fun isCollected(url: String):Boolean{
+    fun isCollected(url: String): Boolean {
         return collectedMap.contains(url) && collectedMap[url] != 0
     }
 
     private fun collectAticle(url: String, title: String) {
         viewModelScope.launch {
-            collectModel.collectArticle(title, "", url).observeForever {
+            collectModel.collectArticle(title, url).observeForever {
                 when (it.requestStatus) {
                     RequestStatus.SUCCESS -> {
                         collectedMap[url] = it.data!!.id!!

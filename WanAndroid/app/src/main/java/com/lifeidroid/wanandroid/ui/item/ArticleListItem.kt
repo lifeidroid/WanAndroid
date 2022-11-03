@@ -37,10 +37,10 @@ fun ArticleListItem(
 ) {
 
     Column(modifier = Modifier
-        .padding(vertical = 8.dp, horizontal = 10.dp)
         .clickable {
             itemClick(item.link!!)
-        }) {
+        }
+        .padding(vertical = 8.dp, horizontal = 10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = "${item.author}${item.shareUser}",
@@ -92,9 +92,9 @@ fun ArticleListItem(
                     .padding(start = 8.dp)
             )
             Box(modifier = Modifier) {
-                if (item.collect != true){
+                if (item.collect != true) {
                     Icon(
-                        bitmap = ImageBitmap.imageResource( R.mipmap.ic_collect),
+                        bitmap = ImageBitmap.imageResource(R.mipmap.ic_collect),
                         contentDescription = null,
                         tint = Color.Red,
                         modifier = Modifier.clickable {
@@ -102,9 +102,13 @@ fun ArticleListItem(
                         }
                     )
                 }
-                this@Row.AnimatedVisibility(visible = item.collect ==true, enter = scaleIn(), exit = scaleOut()){
+                this@Row.AnimatedVisibility(
+                    visible = item.collect == true,
+                    enter = scaleIn(),
+                    exit = scaleOut()
+                ) {
                     Icon(
-                        bitmap = ImageBitmap.imageResource( R.mipmap.ic_collect_s),
+                        bitmap = ImageBitmap.imageResource(R.mipmap.ic_collect_s),
                         contentDescription = null,
                         tint = Color.Red,
                         modifier = Modifier.clickable {

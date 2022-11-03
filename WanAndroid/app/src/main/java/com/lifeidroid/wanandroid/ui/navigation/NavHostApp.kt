@@ -55,6 +55,8 @@ fun NavHostApp(
                 navController.navigate(Screen.MyInfoPage.route)
             }, goMyShare = {
                 navController.navigate(Screen.MySharePage.route)
+            }, goMyCollected = {
+                navController.navigate(Screen.MyCollectedPage.route)
             })
         }
         /**
@@ -152,6 +154,18 @@ fun NavHostApp(
                 navController.navigate("${Screen.ArticleDetailPage.route}/${url.encode()}")
             })
         }
+        /**
+         * 我的收藏
+         */
+        composable(Screen.MyCollectedPage.route) {
+            MyCollectedPage(goBack = {
+                navController.popBackStack()
+            }, webDetail = { url ->
+                navController.navigate("${Screen.WebPage.route}/${url.encode()}")
+            }, articleDetail = { url ->
+                navController.navigate("${Screen.ArticleDetailPage.route}/${url.encode()}")
+            })
+        }
     }
 }
 
@@ -166,6 +180,7 @@ sealed class Screen(val route: String) {
     object SearchPage : Screen("SearchPage")
     object MyInfoPage : Screen("MyInfoPage")
     object MySharePage : Screen("MySharePage")
+    object MyCollectedPage : Screen("MyCollectedPage")
 }
 
 sealed class Param(val name: String) {

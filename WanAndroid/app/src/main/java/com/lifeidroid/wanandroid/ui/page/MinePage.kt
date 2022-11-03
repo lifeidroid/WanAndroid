@@ -30,6 +30,7 @@ fun MinePage(
     goMyInfo: () -> Unit,
     goMyCoinPage: () -> Unit,
     goMyShare:()->Unit,
+    goMyCollected:()->Unit,
     modifier: Modifier = Modifier,
     vm: MineViewModel = hiltViewModel()
 ) {
@@ -162,7 +163,9 @@ fun MinePage(
                 item {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.height(50.dp)
+                        modifier = Modifier.height(50.dp).clickable {
+                            goMyCollected()
+                        }
                     ) {
                         Icon(
                             modifier = Modifier

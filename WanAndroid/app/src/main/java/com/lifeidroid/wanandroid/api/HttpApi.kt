@@ -92,13 +92,12 @@ interface HttpApi {
     ): CommonBean<String>
 
     /**
-     * 6.3 收藏站外文章
+     * 6.6 收藏网址
      * @return CommonBean<String>
      */
-    @POST("lg/collect/add/json")
+    @POST("lg/collect/addtool/json")
     suspend fun collectArticle(
-        @Query("title") title: String,
-        @Query("author") author: String,
+        @Query("name") name: String,
         @Query("link") link: String,
     ): CommonBean<CollecteEntity>
 
@@ -176,4 +175,32 @@ interface HttpApi {
     suspend fun getMyShare(
         @Path("page") page: Int
     ): CommonBean<MyShareEntity>
+
+    /**
+     * 6.5 收藏网站列表
+     * @return CommonBean<MutableList<CollectNetEntity>>
+     */
+    @GET("lg/collect/usertools/json")
+    suspend fun getNetCollect(
+    ): CommonBean<MutableList<CollectNetEntity>>
+
+    /**
+     * 6.8 删除收藏网站
+     * @param id Int
+     * @return CommonBean<String>
+     */
+    @POST("lg/collect/deletetool/json")
+    suspend fun deleteNetCollect(
+        @Query("id") id: Int
+    ): CommonBean<String>
+
+    /**
+     * 6.1 收藏文章列表
+     * @param page Int
+     * @return CommonBean<ArticleEntity>
+     */
+    @GET("lg/collect/list/{page}/json")
+    suspend fun getArticleCollect(
+        @Path("page") page: Int
+    ): CommonBean<CollectArticleEnity>
 }

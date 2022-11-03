@@ -60,11 +60,10 @@ class ArticleViewModel @Inject constructor(savedStateHandle: SavedStateHandle) :
      */
     fun collectArticle(
         title: String,
-        author: String,
         link: String,
     ) {
         viewModelScope.launch {
-            model.collectArticle(title, author, link).observeForever {
+            model.collectArticle(title, link).observeForever {
                 when (it.requestStatus) {
                     RequestStatus.SUCCESS -> {
                         collectedId = 0
