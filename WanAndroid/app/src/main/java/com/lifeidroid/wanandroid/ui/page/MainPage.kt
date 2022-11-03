@@ -31,6 +31,8 @@ fun MainPage(
     goMyCoinPage: () -> Unit,
     goWebPage: (String) -> Unit,
     goSearchPage: () -> Unit,
+    goMyInfo:()->Unit,
+    goMyShare:()->Unit
 ) {
 
     val navController = rememberNavController()
@@ -127,7 +129,7 @@ fun MainPage(
                 SystemPage(toSystemDetail = toSystemDetail, articleDetail = articleDetail)
             }
             composable(Screen.MinePage.route) {
-                MinePage(goMyCoinPage = goMyCoinPage)
+                MinePage(goMyInfo = goMyInfo,goMyCoinPage = goMyCoinPage,goMyShare = goMyShare)
             }
         }
     }

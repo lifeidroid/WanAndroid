@@ -166,4 +166,14 @@ interface HttpApi {
         @Path("page") page: Int,
         @Query("k") key: String
     ): CommonBean<ArticleEntity>
+
+    /**
+     * 10.3 自己的分享的文章列表
+     * @param page Int
+     * @return CommonBean<ArticleEntity>
+     */
+    @GET("user/lg/private_articles/{page}/json")
+    suspend fun getMyShare(
+        @Path("page") page: Int
+    ): CommonBean<MyShareEntity>
 }

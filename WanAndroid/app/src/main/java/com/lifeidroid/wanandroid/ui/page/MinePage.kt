@@ -1,12 +1,13 @@
 package com.lifeidroid.wanandroid.ui.page
 
-import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,7 +27,9 @@ import com.lifeidroid.wanandroid.viewmodel.MineViewModel
 
 @Composable
 fun MinePage(
+    goMyInfo: () -> Unit,
     goMyCoinPage: () -> Unit,
+    goMyShare:()->Unit,
     modifier: Modifier = Modifier,
     vm: MineViewModel = hiltViewModel()
 ) {
@@ -68,7 +71,10 @@ fun MinePage(
                                 .border(
                                     border = BorderStroke(2.dp, Color.White),
                                     shape = CircleShape
-                                ),
+                                )
+                                .clickable {
+                                    goMyInfo()
+                                },
 
                             )
 
@@ -123,7 +129,9 @@ fun MinePage(
                 item {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.height(50.dp)
+                        modifier = Modifier.height(50.dp).clickable {
+                            goMyShare()
+                        }
                     ) {
                         Icon(
                             modifier = Modifier
@@ -182,37 +190,37 @@ fun MinePage(
                         )
                     }
                 }
-                item {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.height(50.dp)
-                    ) {
-                        Icon(
-                            modifier = Modifier
-                                .padding(start = 16.dp, end = 8.dp)
-                                .size(16.dp),
-                            bitmap = ImageBitmap.imageResource(id = R.mipmap.ic_read_later),
-                            contentDescription = null,
-                            tint = colorResource(
-                                id = R.color.bg_blue
-                            ),
-                        )
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = "我的书签",
-                            fontSize = 14.sp,
-                            color = colorResource(id = R.color.text_black)
-                        )
-                        Icon(
-                            modifier = Modifier.padding(end = 16.dp),
-                            bitmap = ImageBitmap.imageResource(id = R.mipmap.ic_enter),
-                            contentDescription = null,
-                            tint = colorResource(
-                                id = R.color.text_gray
-                            )
-                        )
-                    }
-                }
+//                item {
+//                    Row(
+//                        verticalAlignment = Alignment.CenterVertically,
+//                        modifier = Modifier.height(50.dp)
+//                    ) {
+//                        Icon(
+//                            modifier = Modifier
+//                                .padding(start = 16.dp, end = 8.dp)
+//                                .size(16.dp),
+//                            bitmap = ImageBitmap.imageResource(id = R.mipmap.ic_read_later),
+//                            contentDescription = null,
+//                            tint = colorResource(
+//                                id = R.color.bg_blue
+//                            ),
+//                        )
+//                        Text(
+//                            modifier = Modifier.weight(1f),
+//                            text = "我的书签",
+//                            fontSize = 14.sp,
+//                            color = colorResource(id = R.color.text_black)
+//                        )
+//                        Icon(
+//                            modifier = Modifier.padding(end = 16.dp),
+//                            bitmap = ImageBitmap.imageResource(id = R.mipmap.ic_enter),
+//                            contentDescription = null,
+//                            tint = colorResource(
+//                                id = R.color.text_gray
+//                            )
+//                        )
+//                    }
+//                }
                 item {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,

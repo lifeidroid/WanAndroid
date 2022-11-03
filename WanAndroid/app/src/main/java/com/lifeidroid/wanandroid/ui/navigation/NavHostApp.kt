@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.lifeidroid.wanandroid.Constants
 import com.lifeidroid.wanandroid.ext.decode
 import com.lifeidroid.wanandroid.ext.encode
+import com.lifeidroid.wanandroid.ext.getMValue
 import com.lifeidroid.wanandroid.ext.toArrayList
 import com.lifeidroid.wanandroid.model.entity.net.SystemEntity
 import com.lifeidroid.wanandroid.ui.navi.HomeComposeDirections
@@ -50,15 +51,20 @@ fun NavHostApp(
                 navController.navigate("${Screen.WebPage.route}/${url.encode()}")
             }, goSearchPage = {
                 navController.navigate(Screen.SearchPage.route)
+            }, goMyInfo = {
+                navController.navigate(Screen.MyInfoPage.route)
+            }, goMyShare = {
+                navController.navigate(Screen.MySharePage.route)
             })
         }
         /**
          * 分享页面
          */
-        composable("${Screen.SharePage.route}/{${Param.SharePageParam1.name}}/{${Param.SharePageParam2.name}}") {
-            val title = it.arguments!!.getString(Param.SharePageParam1.name, "").decode()
-            val link = it.arguments!!.getString(Param.SharePageParam2.name, "").decode()
-            SharePage(title, link) {
+        composable("${Screen.SharePage.route}?${Param.SharePageParam1.name}={${Param.SharePageParam1.name}}&${Param.SharePageParam2.name}={${Param.SharePageParam2.name}}") {
+            val title = it.arguments?.getString(Param.SharePageParam1.name, "")?.decode()
+            val link = it.arguments?.getString(Param.SharePageParam2.name, "")?.decode()
+            Log.d("====", "11111title:$title    link:$link")
+            SharePage(title.getMValue(), link.getMValue()) {
                 navController.popBackStack()
             }
         }
@@ -77,9 +83,8 @@ fun NavHostApp(
         composable("${Screen.WebPage.route}/{${Param.ArticleDetailPageParam1.name}}") {
             val value1 = it.arguments!!.getString(Param.ArticleDetailPageParam1.name, "").decode()
             WebPage(value1, share = { title, url ->
-                Log.d("===", "title:$title  url:$url")
                 navController.navigate(
-                    "${Screen.SharePage.route}/${title.encode()}/${url.encode()}"
+                    "${Screen.SharePage.route}?${Param.SharePageParam1.name}=${title.encode()}&${Param.SharePageParam2.name}=${url.encode()}"
                 )
             }) {
                 navController.popBackStack()
@@ -102,6 +107,9 @@ fun NavHostApp(
                 })
         }
 
+        /**
+         * 我的积分
+         */
         composable(Screen.MyCoinPage.route) {
             MyCoinPage(goBack = {
                 navController.popBackStack()
@@ -116,9 +124,33 @@ fun NavHostApp(
          * 搜索页面
          */
         composable(Screen.SearchPage.route) {
-            SearchPage() {
+            SearchPage(articleDetail = { url ->
+                navController.navigate("${Screen.ArticleDetailPage.route}/${url.encode()}")
+            }) {
                 navController.popBackStack()
             }
+        }
+        /**
+         * 个人信息
+         */
+        composable(Screen.MyInfoPage.route) {
+            MyInfoPage() {
+                navController.popBackStack()
+            }
+        }
+        /**
+         * 我的分享
+         */
+        composable(Screen.MySharePage.route) {
+            MySharePage(goBack = {
+                navController.popBackStack()
+            }, doAdd = {
+                navController.navigate(
+                    "${Screen.SharePage.route}"
+                )
+            }, articleDetail = { url ->
+                navController.navigate("${Screen.ArticleDetailPage.route}/${url.encode()}")
+            })
         }
     }
 }
@@ -132,6 +164,8 @@ sealed class Screen(val route: String) {
     object WebPage : Screen("WebPage")
     object SharePage : Screen("SharePage")
     object SearchPage : Screen("SearchPage")
+    object MyInfoPage : Screen("MyInfoPage")
+    object MySharePage : Screen("MySharePage")
 }
 
 sealed class Param(val name: String) {

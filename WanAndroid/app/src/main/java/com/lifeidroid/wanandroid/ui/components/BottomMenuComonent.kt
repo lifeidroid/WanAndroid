@@ -120,29 +120,29 @@ fun BottomMenuComonent(
                     color = colorResource(id = R.color.text_black)
                 )
             }
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    bitmap = ImageBitmap.imageResource(id = R.mipmap.ic_home),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(50.dp)
-                        .clip(
-                            CircleShape
-                        )
-                        .background(color = colorResource(id = R.color.bg_gray))
-                        .padding(14.dp)
-
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "书签",
-                    fontSize = 14.sp,
-                    color = colorResource(id = R.color.text_black)
-                )
-            }
+//            Column(
+//                modifier = Modifier.weight(1f),
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Icon(
+//                    bitmap = ImageBitmap.imageResource(id = R.mipmap.ic_home),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .size(50.dp)
+//                        .clip(
+//                            CircleShape
+//                        )
+//                        .background(color = colorResource(id = R.color.bg_gray))
+//                        .padding(14.dp)
+//
+//                )
+//                Spacer(modifier = Modifier.height(8.dp))
+//                Text(
+//                    text = "书签",
+//                    fontSize = 14.sp,
+//                    color = colorResource(id = R.color.text_black)
+//                )
+//            }
         }
         Spacer(modifier = Modifier.height(16.dp))
         Row {
@@ -197,29 +197,29 @@ fun BottomMenuComonent(
                     color = colorResource(id = R.color.text_black)
                 )
             }
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    bitmap = ImageBitmap.imageResource(id = R.mipmap.ic_http_interrupt),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(50.dp)
-                        .clip(
-                            CircleShape
-                        )
-                        .background(color = colorResource(id = R.color.bg_gray))
-                        .padding(14.dp)
-
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "不拦截",
-                    fontSize = 14.sp,
-                    color = colorResource(id = R.color.text_black)
-                )
-            }
+//            Column(
+//                modifier = Modifier.weight(1f),
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Icon(
+//                    bitmap = ImageBitmap.imageResource(id = R.mipmap.ic_http_interrupt),
+//                    contentDescription = null,
+//                    modifier = Modifier
+//                        .size(50.dp)
+//                        .clip(
+//                            CircleShape
+//                        )
+//                        .background(color = colorResource(id = R.color.bg_gray))
+//                        .padding(14.dp)
+//
+//                )
+//                Spacer(modifier = Modifier.height(8.dp))
+//                Text(
+//                    text = "不拦截",
+//                    fontSize = 14.sp,
+//                    color = colorResource(id = R.color.text_black)
+//                )
+//            }
             Column(
                 modifier = Modifier
                     .weight(1f)

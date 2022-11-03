@@ -354,7 +354,7 @@ class SPUtils {
          *
          * @return the single [SPUtils] instance
          */
-        val instance: SPUtils?
+        val instance: SPUtils
             get() = getInstance("", Context.MODE_PRIVATE)
 
         /**
@@ -384,7 +384,7 @@ class SPUtils {
          * @param mode   Operating mode.
          * @return the single [SPUtils] instance
          */
-        fun getInstance(spName: String, mode: Int): SPUtils? {
+        fun getInstance(spName: String, mode: Int): SPUtils {
             var spName = spName
             if (isSpace(spName)) spName = "spUtils"
             var spUtils = SP_UTILS_MAP[spName]
@@ -397,7 +397,7 @@ class SPUtils {
                     }
                 }
             }
-            return spUtils
+            return spUtils!!
         }
 
         private fun isSpace(s: String?): Boolean {

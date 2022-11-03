@@ -18,6 +18,36 @@ fun String.encode() = URLEncoder.encode(this, StandardCharsets.UTF_8.toString())
 
 fun String.decode() = URLDecoder.decode(this, StandardCharsets.UTF_8.toString()) ?: ""
 
+/**
+ * 如果字符串避空
+ * @receiver String
+ * @param holder String
+ * @return String
+ */
+fun String?.getMValue(holder: String = ""): String {
+    return if (this.isNullOrEmpty()) {
+        holder
+    } else {
+        this
+    }
+}
+
+/**
+ * 字符串转List
+ * @receiver String
+ * @param clazz Class<T>
+ * @return List<T>
+ */
 fun <T> String.toArrayList(clazz: Class<T>): List<T> {
     return JSON.parseArray(this, clazz)
+}
+
+/**
+ * 字符串转实体类
+ * @receiver String
+ * @param clazz Class<T>
+ * @return T
+ */
+fun <T> String.toObj(clazz: Class<T>): T {
+    return JSON.parseObject(this, clazz)
 }

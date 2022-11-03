@@ -1,10 +1,13 @@
 package com.lifeidroid.wanandroid.model.entity
 
 import androidx.lifecycle.LiveData
+import com.lifeidroid.wanandroid.Constants
 import com.lifeidroid.wanandroid.base.BaseModel
 import com.lifeidroid.wanandroid.http.ResultData
 import com.lifeidroid.wanandroid.http.customRequest
+import com.lifeidroid.wanandroid.model.entity.net.ArticleEntity
 import com.lifeidroid.wanandroid.model.entity.net.CollecteEntity
+import com.lifeidroid.wanandroid.model.entity.net.MyShareEntity
 import javax.inject.Inject
 
 /**
@@ -93,6 +96,27 @@ class ArticleModel @Inject constructor() : BaseModel() {
         return customRequest {
             api {
                 httpApi.shareArticle(title,link)
+            }
+        }
+    }
+
+    /**
+     * 10.3 自己的分享的文章列表
+     * @param isRefresh Boolean
+     * @return LiveData<ResultData<ArticleEntity>>
+     */
+    suspend fun getMyShare(isRefresh:Boolean):LiveData<ResultData<MyShareEntity>>{
+        if (isRefresh) {
+            pageNumber = Constants.PAGE_START
+        } else {
+            pageNumber++
+        }
+        return customRequest {
+            api {
+                httpApi.getMyShare(pageNumber)
+            }
+            requestTag {
+                isRefresh
             }
         }
     }

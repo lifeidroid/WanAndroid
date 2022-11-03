@@ -81,7 +81,6 @@ class LoginViewModel @Inject constructor(savedStateHandle: SavedStateHandle) :
             model.doLogin(userName, password).observeForever {
                 when (it.requestStatus) {
                     RequestStatus.SUCCESS -> {
-                        SPUtils.instance?.put(Constants.SP_USER_INFO, it.data!!.toJsonString())
                         loginState = true
                         SPUtils.instance?.put(Constants.SP_LOGIN,true)
                     }

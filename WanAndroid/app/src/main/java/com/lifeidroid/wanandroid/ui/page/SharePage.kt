@@ -1,7 +1,6 @@
 package com.lifeidroid.wanandroid.ui.page
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,9 +28,10 @@ fun SharePage(
     link: String,
     vm: ShareViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
-    goBack:()->Unit
+    goBack: () -> Unit
 ) {
     LaunchedEffect(key1 = Unit, block = {
+        Log.d("====", "title:$title    link:$link")
         vm.updateTitle(title)
         vm.updateLink(link)
     })
@@ -55,7 +55,9 @@ fun SharePage(
                 )
             }
         }
-        Column(modifier = Modifier.padding(horizontal = 16.dp).systemBarsPadding()) {
+        Column(modifier = Modifier
+            .padding(horizontal = 16.dp)
+            ) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "文章标题", color = colorResource(id = R.color.text_black), fontSize = 12.sp)
             TextField(
@@ -65,7 +67,9 @@ fun SharePage(
                     backgroundColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
-                )
+                ), placeholder = {
+                    Text(text = "100字以内", color = colorResource(id = R.color.text_gray))
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "文章链接", color = colorResource(id = R.color.text_black), fontSize = 12.sp)
@@ -76,7 +80,9 @@ fun SharePage(
                     backgroundColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
-                )
+                ), placeholder = {
+                    Text(text = "如：http://wwww.baidu.om", color = colorResource(id = R.color.text_gray))
+                }
             )
             Spacer(modifier = Modifier.height(40.dp))
             Button(
@@ -109,7 +115,8 @@ fun SharePage(
                     id = R.color.text_gray
                 ), lineHeight = 20.sp
             )
-            Spacer(modifier = Modifier.heightIn(16.dp))
+            Spacer(modifier = Modifier
+                .systemBarsPadding())
         }
 
     }

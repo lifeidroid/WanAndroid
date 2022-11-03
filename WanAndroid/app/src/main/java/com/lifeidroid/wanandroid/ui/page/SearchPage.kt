@@ -2,13 +2,16 @@ package com.lifeidroid.wanandroid.ui.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,10 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lifeidroid.wanandroid.R
 import com.lifeidroid.wanandroid.ui.components.StatefulContent
 import com.lifeidroid.wanandroid.ui.components.SwipeLazyColum
 import com.lifeidroid.wanandroid.ui.components.TitileBar
+import com.lifeidroid.wanandroid.ui.item.ArticleListItem
 import com.lifeidroid.wanandroid.ui.navigation.direction.ArticleItem
 import com.lifeidroid.wanandroid.viewmodel.SearchViewModel
 
@@ -37,8 +42,20 @@ import com.lifeidroid.wanandroid.viewmodel.SearchViewModel
 fun SearchPage(
     modifier: Modifier = Modifier,
     vm: SearchViewModel = hiltViewModel(),
+    articleDetail: (String) -> Unit,
     goBack: () -> Unit
 ) {
+
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons = !isSystemInDarkTheme()
+
+    DisposableEffect(systemUiController, useDarkIcons) {
+        systemUiController.setSystemBarsColor(
+            color = Color.Transparent,
+            darkIcons = true
+        )
+        onDispose {}
+    }
 
     LaunchedEffect(key1 = Unit, block = {
         vm.getHotKey()
@@ -71,10 +88,6 @@ fun SearchPage(
                         onValueChange = {
                             vm.updateKey(it)
                         },
-//                        placeholder = {
-//                            Text(text = "用空格隔开多个关键词", color = colorResource(id = R.color.text_gray))
-//                        },
-
                         textStyle = TextStyle(color = colorResource(id = if (vm.key.isNullOrEmpty()) R.color.text_gray else R.color.text_white)),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -150,10 +163,13 @@ fun SearchPage(
                     onRefreshCallBack = { vm.doSearch(true) },
                     loadMoreCallBack = { vm.doSearch(false) },
                     content = {
-                        items(vm.searchResult) {
-                            ArticleItem(item = it, isTop = false, itemClick = {
-
-                            })
+                        itemsIndexed(vm.searchResult) { index, item ->
+                            ArticleListItem(item = item, isTop = false, itemClick = {
+                                articleDetail(it)
+                            }, collectClick = {
+                                vm.updateArtcleDataSourceCollect(index)
+                            }
+                            )
                         }
                     }
                 )
